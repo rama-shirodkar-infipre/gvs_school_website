@@ -50,13 +50,71 @@
             </a>
         </li>
 
-        <!-- Services -->
-        <li>
-            <a href="services.php"
-                class="<?= isActive(['services.php', 'service-add.php', 'service-edit.php', 'service-feature.php']) ?>">
-                <i class="bi bi-briefcase-fill"></i>
-                <span>Services</span>
+        <!-- Admissions -->
+        <li class="has-submenu <?= isActive([
+                                    'admission-intro.php',
+                                    'admission-intro-edit.php',
+
+                                    'admission-steps.php',
+                                    'admission-step-add.php',
+                                    'admission-step-edit.php',
+
+                                    'admission-levels.php',
+                                    'admission-level-add.php',
+                                    'admission-level-edit.php',
+
+                                    'admission-documents.php',
+                                    'admission-document-add.php',
+                                    'admission-document-edit.php',
+
+                                    'admission-highlights.php',
+                                    'admission-highlight-add.php',
+                                    'admission-highlight-edit.php'
+                                ]) ?>">
+            <a href="javascript:void(0);">
+                <i class="bi bi-mortarboard-fill"></i>
+                <span>Admissions</span>
+                <i class="bi bi-chevron-down float-end"></i>
             </a>
+
+            <ul class="submenu">
+
+                <li>
+                    <a href="admission-intro.php"
+                        class="<?= isActive(['admission-intro.php', 'admission-intro-edit.php']) ?>">
+                        Admission Intro
+                    </a>
+                </li>
+
+                <li>
+                    <a href="admission-steps.php"
+                        class="<?= isActive(['admission-steps.php', 'admission-step-add.php', 'admission-step-edit.php']) ?>">
+                        Admission Steps
+                    </a>
+                </li>
+
+                <li>
+                    <a href="admission-levels.php"
+                        class="<?= isActive(['admission-levels.php', 'admission-level-add.php', 'admission-level-edit.php']) ?>">
+                        Admission Levels
+                    </a>
+                </li>
+
+                <li>
+                    <a href="admission-documents.php"
+                        class="<?= isActive(['admission-documents.php', 'admission-document-add.php', 'admission-document-edit.php']) ?>">
+                        Required Documents
+                    </a>
+                </li>
+
+                <li>
+                    <a href="admission-highlights.php"
+                        class="<?= isActive(['admission-highlights.php', 'admission-highlight-add.php', 'admission-highlight-edit.php']) ?>">
+                        Admission Highlights
+                    </a>
+                </li>
+
+            </ul>
         </li>
 
         <!-- Gallery -->
@@ -72,37 +130,6 @@
                         ]) ?>">
                 <i class="bi bi-images"></i>
                 <span>Gallery</span>
-            </a>
-        </li>
-
-        <!-- Blogs -->
-        <li>
-            <a href="blogs.php"
-                class="<?= isActive(['blogs.php', 'blog-add.php', 'blog-edit.php']) ?>">
-                <i class="bi bi-journal-text"></i>
-                <span>Blogs</span>
-            </a>
-        </li>
-
-        <!-- Programs & Activities -->
-        <li>
-            <a href="programs-activities.php"
-                class="<?= isActive([
-                            'programs-activities.php',
-                            'program-add.php',
-                            'program-edit.php'
-                        ]) ?>">
-                <i class="bi bi-calendar2-event-fill"></i>
-                <span>Programs & Activities</span>
-            </a>
-        </li>
-
-        <!-- Mi Vaishya -->
-        <li>
-            <a href="mi-vaishya.php"
-                class="<?= isActive(['mi-vaishya.php', 'mi-vaishya-edit.php']) ?>">
-                <i class="bi bi-heart-fill"></i>
-                <span>Mi Vaishya</span>
             </a>
         </li>
 
