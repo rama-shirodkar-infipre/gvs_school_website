@@ -20,7 +20,7 @@
 
   <link rel="stylesheet" href="<?php echo $site_url; ?>css/bootstrap-datepicker.css">
 
-  <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
+  <link rel="stylesheet" href="<?php echo $site_url; ?>fonts/flaticon/font/flaticon.css">
 
   <link rel="stylesheet" href="<?php echo $site_url; ?>css/aos.css">
   <link href="<?php echo $site_url; ?>css/jquery.mb.YTPlayer.min.css" media="all" rel="stylesheet" type="text/css">

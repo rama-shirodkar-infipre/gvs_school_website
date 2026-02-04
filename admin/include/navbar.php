@@ -34,19 +34,19 @@
 
         <!-- Trustees -->
         <li>
-            <a href="trustees.php"
-                class="<?= isActive(['trustees.php', 'trustee-add.php', 'trustee-edit.php']) ?>">
+            <a href="why-choose.php"
+                class="<?= isActive(['why-choose.php', 'why-choose-edit.php', 'why-choose-add.php']) ?>">
                 <i class="bi bi-people-fill"></i>
-                <span>Trustees</span>
+                <span>Why Choose Us</span>
             </a>
         </li>
 
         <!-- Team -->
         <li>
-            <a href="team.php"
-                class="<?= isActive(['team.php', 'team-add.php', 'team-edit.php']) ?>">
+            <a href="staff.php"
+                class="<?= isActive(['staff.php', 'staff-add.php', 'staff-edit.php']) ?>">
                 <i class="bi bi-people"></i>
-                <span>Team</span>
+                <span>Staff</span>
             </a>
         </li>
 

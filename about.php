@@ -1,347 +1,278 @@
 <?php
 include 'include/config.php';
+include 'admin/helpers.php';
 include 'include/header.php';
+/* =========================
+   FETCH DATA
+========================= */
+
+// About Us (single row)
+$about = $pdo->query("SELECT * FROM about_us WHERE is_active=1 LIMIT 1")->fetch();
+
+// History
+$history = [];
+if ($about) {
+  $stmt = $pdo->prepare("SELECT * FROM about_history WHERE about_id=? ORDER BY id ASC");
+  $stmt->execute([$about['id']]);
+  $history = $stmt->fetchAll();
+}
+
+// Why Choose Us
+$whyChoose = $pdo->query("
+    SELECT * FROM why_choose_us
+    WHERE is_active=1
+    ORDER BY id ASC
+")->fetchAll();
+
+// Staff Members
+$staff = $pdo->query("
+    SELECT * FROM staff_members
+    WHERE is_active=1
+    ORDER BY id ASC
+")->fetchAll();
 ?>
 
 <div class="site-wrap">
-  <?php
-  include 'include/navbar.php';
-  ?>
+  <?php include 'include/navbar.php'; ?>
 
-  <div class="site-section ftco-subscribe-1 site-blocks-cover pb-4" style="background-image:
-     linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
-     url('images/bg_1.jpg')">
+  <!-- ================= HERO ================= -->
+  <div class="site-section ftco-subscribe-1 site-blocks-cover pb-4"
+    style="background-image:linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),url('images/bg_1.jpg')">
     <div class="container">
       <div class="row align-items-end">
         <div class="col-lg-7">
           <h2 class="mb-0">About Us</h2>
-          <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing.</p> -->
         </div>
       </div>
     </div>
   </div>
 
-
+  <!-- ================= BREADCRUMB ================= -->
   <div class="custom-breadcrumns border-bottom">
     <div class="container">
-      <a href="index.html">Home</a>
+      <a href="index.php">Home</a>
       <span class="mx-3 icon-keyboard_arrow_right"></span>
       <span class="current">About Us</span>
     </div>
   </div>
 
+  <!-- ================= ABOUT INTRO ================= -->
+  <?php if ($about): ?>
+    <div class="site-section">
+      <div class="container">
 
-  <div class="site-section">
-    <div class="container">
-
-      <!-- TOP LABEL + TITLE -->
-      <div class="row mb-5">
-        <div class="col-lg-8">
-          <small style="letter-spacing:2px; font-weight:600;">About us</small>
-          <h1 style="font-weight:700; margin-top:15px;">
-            Discover Gopal Krishna <br> School
-          </h1>
-        </div>
-      </div>
-
-      <!-- IMAGE + CONTENT -->
-      <div class="row align-items-center">
-
-        <!-- LEFT IMAGE -->
-        <div class="col-lg-6 mb-4 mb-lg-0">
-          <img src="images/about-school.jpg" alt="Gopal Krishna School" class="img-fluid" style="border-radius:20px;">
+        <div class="row mb-5">
+          <div class="col-lg-8">
+            <!-- <small style="letter-spacing:2px;font-weight:600;">
+            
+            </small> -->
+            <h1 style="font-weight:700;margin-top:15px;">
+              <?= nl2br($about['title']) ?>
+            </h1>
+          </div>
         </div>
 
-        <!-- RIGHT CONTENT -->
-        <div class="col-lg-5 ml-auto">
-          <h3 style="font-weight:600; margin-bottom:20px;">
-            Our Educational Philosophy
-          </h3>
+        <div class="row align-items-center">
+          <div class="col-lg-6 mb-4 mb-lg-0">
+            <?php if ($about['image']): ?>
+              <img src="uploads/<?= $about['image'] ?>"
+                class="img-fluid"
+                style="border-radius:20px;">
+            <?php endif; ?>
+          </div>
 
-          <p>
-            Established in 2013, Gopal Krishna School was founded with a vision
-            to provide a comprehensive and value-driven education.
-          </p>
-
-          <p>
-            Our mission is to nurture intellectual curiosity, foster strong moral
-            character, and inspire a lifelong love of learning, preparing our
-            students to be compassionate leaders and responsible global citizens.
-          </p>
+          <div class="col-lg-5 ml-auto">
+            <h3 style="font-weight:600; margin-bottom:20px;">
+              <?= htmlspecialchars($about['subheading']) ?>
+            </h3>
+            <?= $about['description'] ?>
+          </div>
         </div>
 
       </div>
     </div>
-  </div>
+  <?php endif; ?>
 
-  <div class="site-section">
-    <div class="container">
-      <div class="row mb-5">
-        <div class="col-lg-12 text-center">
-          <h2 class="section-title-underline">
-            <span>Saunstha & School History</span>
-          </h2>
-        </div>
-      </div>
+  <!-- ================= HISTORY ================= -->
+  <?php if (!empty($history)): ?>
+    <div class="site-section">
+      <div class="container">
 
-      <div class="row">
-        <div class="col-lg-6">
-          <p>
-            Gopalkrishna Shikshan Saunstha was established with a vision to provide
-            quality education rooted in strong moral values and academic excellence.
-          </p>
-        </div>
-        <div class="col-lg-6">
-          <p>
-            Gopalkrishna Pre-Primary, Primary & High School has grown over the years
-            into a trusted institution nurturing students academically, socially,
-            and ethically.
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="site-section bg-light">
-    <div class="container">
-
-      <!-- VISION -->
-      <div class="row align-items-start mb-5">
-        <div class="col-lg-3">
-          <p style="font-weight:600; letter-spacing:1px; margin-top:8px;">
-            Vision
-          </p>
+        <div class="row mb-5">
+          <div class="col-lg-12 text-center">
+            <h2 class="section-title-underline">
+              <span>Saunstha & School History</span>
+            </h2>
+          </div>
         </div>
 
-        <div class="col-lg-9">
-          <p style="font-size:28px; line-height:1.6;">
-            Our vision is to be a leading institution in Goa,
-            preparing students for a dynamic world through innovative
-            learning and community engagement.
-          </p>
-        </div>
-      </div>
-
-      <hr style="margin:50px 0;">
-
-      <!-- MISSION -->
-      <div class="row align-items-start">
-        <div class="col-lg-3">
-          <p style="font-weight:600; letter-spacing:1px; margin-top:8px;">
-            Mission
-          </p>
-        </div>
-
-        <div class="col-lg-9">
-          <p style="font-size:28px; line-height:1.6;">
-            Our mission is to provide a holistic and nurturing environment
-            that inspires academic excellence and strong moral character.
-          </p>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <div class="site-section">
-    <div class="container">
-      <div class="row align-items-center">
-
-        <!-- LEFT CONTENT -->
-        <div class="col-lg-4 mb-4 mb-lg-0">
-          <h2 class="mb-4" style="font-weight:700;">
-            President & <br> Head of School
-          </h2>
-
-          <p>
-            It is with immense pride that I welcome you to our school.
-          </p>
-
-          <p>
-            We are more than an institution; we are a family dedicated to
-            fostering a love of learning and providing a supportive
-            environment where students can become the best versions of
-            themselves.
-          </p>
-        </div>
-
-        <!-- CENTER IMAGE -->
-        <div class="col-lg-4 text-center mb-4 mb-lg-0">
-          <img src="images/chairperson.jpg" alt="Chairperson" class="img-fluid"
-            style="border-radius:20px; max-height:420px; object-fit:cover;">
-        </div>
-
-        <!-- RIGHT QUOTE -->
-        <div class="col-lg-4">
-          <div style="font-size:40px; line-height:1;">“</div>
-
-          <p style="font-size:18px;">
-            Advancing education, shaping students with the right values.
-          </p>
-
-          <p style="margin-top:20px;">
-            <strong>S. S. Hinde</strong><br>
-            President,<br>
-            Gopalkrishna Vidhyaprasarak Saunstha
-          </p>
+        <div class="row">
+          <?php foreach ($history as $h): ?>
+            <div class="col-lg-6 mb-3">
+              <p><?= nl2br($h['description']) ?></p>
+            </div>
+          <?php endforeach; ?>
         </div>
 
       </div>
     </div>
-  </div>
+  <?php endif; ?>
 
+  <!-- ================= VISION & MISSION ================= -->
+  <?php if ($about): ?>
+    <div class="site-section bg-light">
+      <div class="container">
 
-  <div class="site-section bg-light">
-    <div class="container">
-      <div class="row mb-5 justify-content-center text-center">
-        <div class="col-lg-4 mb-5">
-          <h2 class="section-title-underline mb-5">
-            <span>Why Choose Gopal Krishna School?</span>
-          </h2>
+        <div class="row align-items-start mb-5">
+          <div class="col-lg-3">
+            <p style="font-weight:600;letter-spacing:1px;">Vision</p>
+          </div>
+          <div class="col-lg-9">
+            <p style="font-size:28px;line-height:1.6;">
+              <?= nl2br($about['vision']) ?>
+            </p>
+          </div>
         </div>
+
+        <hr style="margin:50px 0;">
+
+        <div class="row align-items-start">
+          <div class="col-lg-3">
+            <p style="font-weight:600;letter-spacing:1px;">Mission</p>
+          </div>
+          <div class="col-lg-9">
+            <p style="font-size:28px;line-height:1.6;">
+              <?= nl2br($about['mission']) ?>
+            </p>
+          </div>
+        </div>
+
       </div>
-      <div class="row">
-        <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+    </div>
+  <?php endif; ?>
 
-          <div class="feature-1 border">
-            <div class="icon-wrapper bg-primary">
-              <span class="flaticon-mortarboard text-white"></span>
-            </div>
-            <div class="feature-1-content">
-              <h2>Character Development</h2>
-              <p>We instill strong values like integrity, respect, and empathy, preparing students to be responsible
-                and compassionate citizens.</p>
-              <p><a href="#" class="btn btn-primary px-4 rounded-0">Learn More</a></p>
-            </div>
+  <!-- ================= PRESIDENT ================= -->
+  <?php if ($about): ?>
+    <div class="site-section">
+      <div class="container">
+
+        <div class="row align-items-center">
+
+          <div class="col-lg-4 mb-4">
+            <h2 style="font-weight:700;">
+              President & <br> Head of School
+            </h2>
+            <p><?= nl2br($about['president_message']) ?></p>
           </div>
-        </div>
-        <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
-          <div class="feature-1 border">
-            <div class="icon-wrapper bg-primary">
-              <span class="flaticon-school-material text-white"></span>
-            </div>
-            <div class="feature-1-content">
-              <h2>Academic Excellence</h2>
-              <p>Our rigorous curriculum and dedicated faculty empower students to achieve their full academic
-                potential and succeed in their chosen paths</p>
-              <p><a href="#" class="btn btn-primary px-4 rounded-0">Learn More</a></p>
-            </div>
+
+          <div class="col-lg-4 text-center mb-4">
+            <?php if ($about['president_image']): ?>
+              <img src="uploads/<?= $about['president_image'] ?>"
+                class="img-fluid"
+                style="border-radius:20px;max-height:420px;">
+            <?php endif; ?>
           </div>
-        </div>
-        <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
-          <div class="feature-1 border">
-            <div class="icon-wrapper bg-primary">
-              <span class="flaticon-library text-white"></span>
-            </div>
-            <div class="feature-1-content">
-              <h2>Holistic Well-being</h2>
-              <p>Our supportive environment fosters emotional intelligence and resilience for a balanced and joyful
-                school experience.</p>
-              <p><a href="#" class="btn btn-primary px-4 rounded-0">Learn More</a></p>
-            </div>
+
+          <div class="col-lg-4">
+            <div style="font-size:40px;">“</div>
+            <p style="font-size:18px;">
+              <?= htmlspecialchars($about['president_quote']) ?>
+            </p>
+            <p>
+              <strong><?= htmlspecialchars($about['president_name']) ?></strong><br>
+              <?= htmlspecialchars($about['president_designation']) ?>
+            </p>
           </div>
+
         </div>
       </div>
     </div>
-  </div>
+  <?php endif; ?>
 
-
-  <div class="site-section">
-    <div class="container">
-      <div class="row mb-5 justify-content-center text-center">
-        <div class="col-lg-4 mb-5">
-          <h2 class="section-title-underline mb-5">
-            <span>Our Staff Members</span>
-          </h2>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-4 col-md-6 mb-5 mb-lg-5">
-
-          <div class="feature-1 border person text-center">
-            <img src="images/person_1.jpg" alt="Image" class="img-fluid">
-            <div class="feature-1-content">
-              <h2>Craig Daniel</h2>
-              <span class="position mb-3 d-block">Math Teacher</span>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit morbi hendrerit elit</p>
-            </div>
+  <!-- ================= WHY CHOOSE US ================= -->
+  <?php if (!empty($whyChoose)): ?>
+    <div class="site-section bg-light">
+      <div class="container">
+        <div class="row mb-5 justify-content-center text-center">
+          <div class="col-lg-4 mb-5">
+            <h2 class="section-title-underline mb-5">
+              <span>Why Choose Gopal Krishna School?</span>
+            </h2>
           </div>
         </div>
-        <div class="col-lg-4 col-md-6 mb-5 mb-lg-5">
-          <div class="feature-1 border person text-center">
-            <img src="images/person_2.jpg" alt="Image" class="img-fluid">
-            <div class="feature-1-content">
-              <h2>Taylor Simpson</h2>
-              <span class="position mb-3 d-block">Math Teacher</span>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit morbi hendrerit elit</p>
+        <div class="row">
+          <?php foreach ($whyChoose as $w): ?>
+            <div class="col-lg-4 col-md-6 mb-4">
+              <div class="feature-1 border">
+                <div class="icon-wrapper bg-primary">
+                  <span class="<?= $w['icon'] ?> text-white"></span>
+                </div>
+                <div class="feature-1-content">
+                  <h2><?= htmlspecialchars($w['title']) ?></h2>
+                  <?= $w['description'] ?>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        <div class="col-lg-4 col-md-6 mb-5 mb-lg-5">
-          <div class="feature-1 border person text-center">
-            <img src="images/person_3.jpg" alt="Image" class="img-fluid">
-            <div class="feature-1-content">
-              <h2>Jonas Tabble</h2>
-              <span class="position mb-3 d-block">Math Teacher</span>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit morbi hendrerit elit</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-4 col-md-6 mb-5 mb-lg-5">
-
-          <div class="feature-1 border person text-center">
-            <img src="images/person_4.jpg" alt="Image" class="img-fluid">
-            <div class="feature-1-content">
-              <h2>Craig Daniel</h2>
-              <span class="position mb-3 d-block">Math Teacher</span>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit morbi hendrerit elit</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4 col-md-6 mb-5 mb-lg-5">
-          <div class="feature-1 border person text-center">
-            <img src="images/person_2.jpg" alt="Image" class="img-fluid">
-            <div class="feature-1-content">
-              <h2>Taylor Simpson</h2>
-              <span class="position mb-3 d-block">Math Teacher</span>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit morbi hendrerit elit</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4 col-md-6 mb-5 mb-lg-5">
-          <div class="feature-1 border person text-center">
-            <img src="images/person_3.jpg" alt="Image" class="img-fluid">
-            <div class="feature-1-content">
-              <h2>Jonas Tabble</h2>
-              <span class="position mb-3 d-block">Math Teacher</span>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit morbi hendrerit elit</p>
-            </div>
-          </div>
+          <?php endforeach; ?>
         </div>
       </div>
     </div>
-  </div>
+  <?php endif; ?>
 
-  <div class="site-section ftco-subscribe-1" style="background-image: url('images/bg_1.jpg')">
-    <div class="container">
-      <div class="row align-items-center">
-        <div class="col-lg-7">
-          <h2>Subscribe to us!</h2>
-          <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,</p>
+  <!-- ================= STAFF ================= -->
+  <?php if (!empty($staff)): ?>
+    <div class="site-section">
+      <div class="container">
+        <div class="row mb-5 justify-content-center text-center">
+          <div class="col-lg-4 mb-5">
+            <h2 class="section-title-underline mb-5">
+              <span>Our Staff Members</span>
+            </h2>
+          </div>
         </div>
-        <div class="col-lg-5">
-          <form action="" class="d-flex">
-            <input type="text" class="rounded form-control mr-2 py-3" placeholder="Enter your email">
-            <button class="btn btn-primary rounded py-3 px-4" type="submit">Send</button>
-          </form>
+        <div class="row">
+          <?php foreach ($staff as $s): ?>
+            <div class="col-lg-4 col-md-6 mb-5">
+              <div class="feature-1 border person text-center">
+                <?php if ($s['image']): ?>
+                  <img src="uploads/<?= $s['image'] ?>" class="img-fluid">
+                <?php endif; ?>
+                <div class="feature-1-content">
+                  <h2><?= htmlspecialchars($s['name']) ?></h2>
+                  <span class="position d-block"><?= htmlspecialchars($s['designation']) ?></span>
+                  <p><?= htmlspecialchars($s['bio']) ?></p>
+                </div>
+              </div>
+            </div>
+          <?php endforeach; ?>
         </div>
       </div>
     </div>
-  </div>
-  <?php
-  include 'include/footer.php';
-  ?>
-  <?php
-  include 'include/footerScript.php';
-  ?>
+
+
+    <div class="site-section">
+      <div class="container">
+        <div class="row">
+          <?php foreach ($staff as $s): ?>
+            <div class="col-lg-4 col-md-6 mb-5">
+              <div class="feature-1 border person text-center">
+                <?php if ($s['image']): ?>
+                  <img src="uploads/<?= $s['image'] ?>" class="img-fluid">
+                <?php endif; ?>
+                <div class="feature-1-content">
+                  <h2><?= htmlspecialchars($s['name']) ?></h2>
+                  <span class="position d-block"><?= htmlspecialchars($s['designation']) ?></span>
+                  <p><?= htmlspecialchars($s['bio']) ?></p>
+                </div>
+              </div>
+            </div>
+          <?php endforeach; ?>
+        </div>
+
+      </div>
+    </div>
+  <?php endif; ?>
+
+</div>
+<?php include 'include/footer.php'; ?>
+<?php include 'include/footerScript.php'; ?>
