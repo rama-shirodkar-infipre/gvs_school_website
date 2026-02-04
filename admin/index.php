@@ -31,7 +31,7 @@ $colors = ['bg-primary', 'bg-success', 'bg-warning', 'bg-danger', 'bg-info', 'bg
     <div class="topbar d-flex justify-content-between align-items-center mb-4">
         <div>
             <h5 class="mb-0">Welcome, <?= htmlspecialchars($_SESSION['admin_name']) ?></h5>
-            <small class="text-muted">Vaishya Global Charitable Trust</small>
+            <small class="text-muted">GVS School Website</small>
         </div>
         <div class="text-muted">
             <i class="bi bi-calendar3"></i> <?= date('d M Y, l') ?>
@@ -94,7 +94,7 @@ $colors = ['bg-primary', 'bg-success', 'bg-warning', 'bg-danger', 'bg-info', 'bg
             <h6>Admin Overview</h6>
             <p class="text-muted mb-0">
                 Manage <strong>blogs, gallery, programs, team members, trustees, testimonials, sliders, and FAQs</strong> of
-                <strong>Vaishya Global Charitable Trust</strong> from this dashboard. Quickly see stats and navigate to management pages.
+                <strong>GVS School Website</strong> from this dashboard. Quickly see stats and navigate to management pages.
             </p>
         </div>
     </div>

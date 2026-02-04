@@ -2,8 +2,8 @@
 
     <!-- Logo Section -->
     <div class="sidebar-header text-center">
-        <img src="<?= $site_url ?>assets/img/vgct.png" alt="Vaishya Global">
-        <h6>Vaishya Global</h6>
+        <img src="<?= $site_url ?>images/logo.png" alt="">
+        <h6>GVS</h6>
         <span>Admin Panel</span>
     </div>
 
