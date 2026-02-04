@@ -515,8 +515,8 @@ h1, h2, h3, h4, h5,
   z-index: 100;
   width: 100%;
   background: #fff; }
-  .sticky-wrapper + .site-blocks-cover {
-    margin-top: 96px; }
+  /* .sticky-wrapper + .site-blocks-cover {
+    margin-top: 96px; } */
   .sticky-wrapper .site-navbar {
     -webkit-transition: .3s all ease;
     -o-transition: .3s all ease;
@@ -1558,4 +1558,60 @@ html, body {
 
 .accordion-box.active .arrow::before {
   transform: rotate(90deg);
+}
+
+/* Remove extra space above header */
+.site-navbar {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  background: #fff;
+}
+
+/* Align logo + menu perfectly */
+.site-navbar .d-flex {
+  min-height: 90px;
+  align-items: center;
+}
+
+/* Logo size like first image */
+.site-logo img {
+  max-width: 80px;
+  margin-bottom: 0 !important;
+}
+
+.site-menu > li > a {
+  padding: 10px 15px;
+  font-size: 15px;
+}
+
+/* Remove underline spacing glitches */
+.site-menu {
+  margin-bottom: 0;
+}
+
+/* Fix header gap on inner pages */
+.site-navbar {
+  position: relative !important;
+}
+
+.sticky-wrapper {
+  position: relative !important;
+}
+
+.site-section:first-of-type {
+  padding-top: 0;
+}
+
+/* Wider header spacing */
+.header-wide {
+  padding-left: 80px;
+  padding-right: 80px;
+}
+
+/* Even wider on large screens */
+@media (min-width: 1200px) {
+  .header-wide {
+    padding-left: 120px;
+    padding-right: 120px;
+  }
 }

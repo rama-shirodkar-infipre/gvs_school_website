@@ -45,7 +45,7 @@ include 'include/header.php';
                 foundational skills through play-based learning in a joyful environment.
               </p>
 
-              <a href="pre-primary.html" class="academic-link">
+              <a href="pre-primary.php" class="academic-link">
                 Discover Pre-Primary →
               </a>
             </div>
@@ -63,7 +63,7 @@ include 'include/header.php';
                 curriculum with engaging activities for holistic growth.
               </p>
 
-              <a href="primary.html" class="academic-link">
+              <a href="primary.php" class="academic-link">
                 Explore Primary Curriculum →
               </a>
             </div>
@@ -81,7 +81,7 @@ include 'include/header.php';
                 preparation, and success in board examinations.
               </p>
 
-              <a href="high-school.html" class="academic-link">
+              <a href="high-school.php" class="academic-link">
                 Learn About High School →
               </a>
             </div>
