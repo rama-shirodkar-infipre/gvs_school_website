@@ -8,7 +8,7 @@
 </div>
 
 
-<div class="py-2 bg-light">
+<!-- <div class="py-2 bg-light">
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-9 d-none d-lg-block">
@@ -23,17 +23,17 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 <header class="site-navbar py-4 js-sticky-header site-navbar-target" role="banner">
 
-    <div class="container">
+    <div class="container-fluid header-wide">
         <div class="d-flex align-items-center">
             <div class="site-logo">
                 <a href="index.php" class="d-block">
                     <img src="images/logo.png" alt="Gopalkrishna School Logo" class="img-fluid mb-3" style="max-width:100px;">
                 </a>
             </div>
-            <div class="mr-auto">
+            <div class="ml-auto">
                 <nav class="site-navigation position-relative text-right" role="navigation">
                     <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
                         <li class="active">
@@ -63,7 +63,7 @@
                 </nav>
 
             </div>
-            <div class="ml-auto">
+            <!-- <div class="ml-auto">
                 <div class="social-wrap">
                     <a href="#"><span class="icon-facebook"></span></a>
                     <a href="#"><span class="icon-instagram"></span></a>
@@ -71,7 +71,7 @@
                     <a href="#" class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-black"><span
                             class="icon-menu h3"></span></a>
                 </div>
-            </div>
+            </div> -->
 
         </div>
     </div>
