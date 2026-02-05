@@ -24,9 +24,9 @@ include 'include/header.php';
 
   <div class="custom-breadcrumns border-bottom">
     <div class="container">
-      <a href="index.html">Home</a>
+      <a href="index.php">Home</a>
       <span class="mx-3 icon-keyboard_arrow_right"></span>
-      <a href="courses.html">Courses</a>
+      <a href="courses.php">Courses</a>
       <span class="mx-3 icon-keyboard_arrow_right"></span>
       <span class="current">Pre-Primary</span>
     </div>
@@ -248,7 +248,7 @@ include 'include/header.php';
             is ready to guide you through the next steps.
           </p>
 
-          <a href="admissions.html" class="btn btn-primary cta-btn">
+          <a href="admissions.php" class="btn btn-primary cta-btn">
             Begin Admission Process
           </a>
 

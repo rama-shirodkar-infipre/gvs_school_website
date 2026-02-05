@@ -1,6 +1,21 @@
 <?php
 include 'include/config.php';
+include 'admin/helpers.php';
 include 'include/header.php';
+
+$categories = $pdo->query("
+    SELECT * FROM gallery_categories
+    WHERE is_active=1
+    ORDER BY display_order ASC
+")->fetchAll(PDO::FETCH_ASSOC);
+
+$items = $pdo->query("
+    SELECT gi.*, gc.id AS cat_id, gc.title AS cat_title
+    FROM gallery_items gi
+    JOIN gallery_categories gc ON gc.id = gi.category_id
+    WHERE gi.is_active=1 AND gc.is_active=1
+    ORDER BY gi.display_order ASC
+")->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <div class="site-wrap">
@@ -23,7 +38,7 @@ include 'include/header.php';
 
     <div class="custom-breadcrumns border-bottom">
         <div class="container">
-            <a href="index.html">Home</a>
+            <a href="index.php">Home</a>
             <span class="mx-3 icon-keyboard_arrow_right"></span>
             <span class="current">Gallery</span>
         </div>
@@ -48,134 +63,38 @@ include 'include/header.php';
                 <div class="col-lg-8 text-center">
                     <div class="gallery-filters">
                         <button class="active" data-filter="*">All</button>
-                        <button data-filter=".annual">Annual Day</button>
-                        <button data-filter=".sports">Science Fair</button>
-                        <button data-filter=".classroom">Cultural Fest</button>
-                        <button data-filter=".festival">Annual Art Exhibition</button>
+
+                        <?php foreach ($categories as $cat): ?>
+                            <button data-filter=".cat<?= $cat['id'] ?>">
+                                <?= htmlspecialchars($cat['title']) ?>
+                            </button>
+                        <?php endforeach; ?>
                     </div>
+
                 </div>
             </div>
 
             <!-- Gallery Grid -->
             <div class="row gallery-grid">
 
-                <!-- Annual Day -->
-                <div class="col-lg-4 col-md-6 mb-4 gallery-item annual">
-                    <a href="images/gallery/annual1.jpg" data-fancybox="gallery">
-                        <img src="images/gallery/annual1.jpg" class="img-fluid">
-                        <div class="gallery-overlay"><span>Annual Day</span></div>
-                    </a>
-                </div>
+                <?php foreach ($items as $img): ?>
+                    <div class="col-lg-4 col-md-6 mb-4 gallery-item cat<?= $img['category_id'] ?>">
+                        <a href="<?= $site_url ?>uploads/<?= $img['image'] ?>"
+                            data-fancybox="gallery"
+                            data-caption="<?= htmlspecialchars($img['title']) ?>">
 
-                <div class="col-lg-4 col-md-6 mb-4 gallery-item annual">
-                    <a href="images/gallery/annual2.jpg" data-fancybox="gallery">
-                        <img src="images/gallery/annual2.jpg" class="img-fluid">
-                        <div class="gallery-overlay"><span>Annual Day</span></div>
-                    </a>
-                </div>
+                            <img src="<?= $site_url ?>uploads/<?= $img['image'] ?>"
+                                class="img-fluid">
 
-                <div class="col-lg-4 col-md-6 mb-4 gallery-item annual">
-                    <a href="images/gallery/annual3.jpg" data-fancybox="gallery">
-                        <img src="images/gallery/annual3.jpg" class="img-fluid">
-                        <div class="gallery-overlay"><span>Annual Day</span></div>
-                    </a>
-                </div>
-
-                <div class="col-lg-4 col-md-6 mb-4 gallery-item annual">
-                    <a href="images/gallery/annual4.jpg" data-fancybox="gallery">
-                        <img src="images/gallery/annual4.jpg" class="img-fluid">
-                        <div class="gallery-overlay"><span>Annual Day</span></div>
-                    </a>
-                </div>
-
-                <!-- Science Fair -->
-                <div class="col-lg-4 col-md-6 mb-4 gallery-item sports">
-                    <a href="images/gallery/science1.jpg" data-fancybox="gallery">
-                        <img src="images/gallery/science1.jpg" class="img-fluid">
-                        <div class="gallery-overlay"><span>Science Fair</span></div>
-                    </a>
-                </div>
-
-                <div class="col-lg-4 col-md-6 mb-4 gallery-item sports">
-                    <a href="images/gallery/science3.jpg" data-fancybox="gallery">
-                        <img src="images/gallery/science3.jpg" class="img-fluid">
-                        <div class="gallery-overlay"><span>Science Fair</span></div>
-                    </a>
-                </div>
-
-                <div class="col-lg-4 col-md-6 mb-4 gallery-item sports">
-                    <a href="images/gallery/science4.jpg" data-fancybox="gallery">
-                        <img src="images/gallery/science4.jpg" class="img-fluid">
-                        <div class="gallery-overlay"><span>Science Fair</span></div>
-                    </a>
-                </div>
-
-                <div class="col-lg-4 col-md-6 mb-4 gallery-item sports">
-                    <a href="images/gallery/science2.jpg" data-fancybox="gallery">
-                        <img src="images/gallery/science2.jpg" class="img-fluid">
-                        <div class="gallery-overlay"><span>Science Fair</span></div>
-                    </a>
-                </div>
-
-                <!-- Cultural Fest -->
-                <div class="col-lg-4 col-md-6 mb-4 gallery-item classroom">
-                    <a href="images/gallery/cultural1.jpg" data-fancybox="gallery">
-                        <img src="images/gallery/cultural1.jpg" class="img-fluid">
-                        <div class="gallery-overlay"><span>Cultural Fest</span></div>
-                    </a>
-                </div>
-
-                <div class="col-lg-4 col-md-6 mb-4 gallery-item classroom">
-                    <a href="images/gallery/cultural3.jpg" data-fancybox="gallery">
-                        <img src="images/gallery/cultural3.jpg" class="img-fluid">
-                        <div class="gallery-overlay"><span>Cultural Fest</span></div>
-                    </a>
-                </div>
-
-                <div class="col-lg-4 col-md-6 mb-4 gallery-item classroom">
-                    <a href="images/gallery/cultural4.jpg" data-fancybox="gallery">
-                        <img src="images/gallery/cultural4.jpg" class="img-fluid">
-                        <div class="gallery-overlay"><span>Cultural Fest</span></div>
-                    </a>
-                </div>
-
-                <div class="col-lg-4 col-md-6 mb-4 gallery-item classroom">
-                    <a href="images/gallery/cultural2.jpg" data-fancybox="gallery">
-                        <img src="images/gallery/cultural2.jpg" class="img-fluid">
-                        <div class="gallery-overlay"><span>Cultural Fest</span></div>
-                    </a>
-                </div>
-
-                <!-- Annual Art Exhibition -->
-                <div class="col-lg-4 col-md-6 mb-4 gallery-item festival">
-                    <a href="images/gallery/2.jpg" data-fancybox="gallery">
-                        <img src="images/gallery/art2.jpg" class="img-fluid">
-                        <div class="gallery-overlay"><span>Annual Art Exhibition</span></div>
-                    </a>
-                </div>
-
-                <div class="col-lg-4 col-md-6 mb-4 gallery-item festival">
-                    <a href="images/gallery/art3.jpg" data-fancybox="gallery">
-                        <img src="images/gallery/art3.jpg" class="img-fluid">
-                        <div class="gallery-overlay"><span>Annual Art Exhibition</span></div>
-                    </a>
-                </div>
-
-                <div class="col-lg-4 col-md-6 mb-4 gallery-item festival">
-                    <a href="images/gallery/art4.jpg" data-fancybox="gallery">
-                        <img src="images/gallery/art4.jpg" class="img-fluid">
-                        <div class="gallery-overlay"><span>Annual Art Exhibition</span></div>
-                    </a>
-                </div>
-
-                <div class="col-lg-4 col-md-6 mb-4 gallery-item festival">
-                    <a href="images/gallery/art1.jpg" data-fancybox="gallery">
-                        <img src="images/gallery/art1.jpg" class="img-fluid">
-                        <div class="gallery-overlay"><span>Annual Art Exhibition</span></div>
-                    </a>
-                </div>
+                            <div class="gallery-overlay">
+                                <span><?= htmlspecialchars($img['title']) ?></span>
+                            </div>
+                        </a>
+                    </div>
+                <?php endforeach; ?>
 
             </div>
+
         </div>
     </div>
     <?php
@@ -189,7 +108,8 @@ include 'include/footerScript.php';
 <script>
     $(document).ready(function() {
         $('.gallery-filters button').click(function() {
-            let filter = $(this).attr('data-filter');
+
+            let filter = $(this).data('filter');
 
             $('.gallery-filters button').removeClass('active');
             $(this).addClass('active');

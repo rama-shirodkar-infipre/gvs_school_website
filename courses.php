@@ -1,6 +1,9 @@
 <?php
 include 'include/config.php';
+include 'admin/helpers.php';
 include 'include/header.php';
+
+$courses = $pdo->query("SELECT * FROM courses WHERE is_active=1")->fetchAll();
 ?>
 
 <div class="site-wrap">
@@ -24,7 +27,7 @@ include 'include/header.php';
 
   <div class="custom-breadcrumns border-bottom">
     <div class="container">
-      <a href="index.html">Home</a>
+      <a href="index.php">Home</a>
       <span class="mx-3 icon-keyboard_arrow_right"></span>
       <span class="current">Courses</span>
     </div>
@@ -32,7 +35,7 @@ include 'include/header.php';
 
   <div class="site-section">
     <div class="container">
-      <div class="row">
+      <!-- <div class="row">
 
         <div class="col-lg-4 col-md-6 mb-5">
           <div class="academic-card">
@@ -88,6 +91,24 @@ include 'include/header.php';
           </div>
         </div>
 
+      </div> -->
+      <div class="row">
+        <?php foreach ($courses as $c): ?>
+          <div class="col-lg-4 col-md-6 mb-5">
+            <div class="academic-card featured">
+              <img src="<?= $site_url ?>uploads/<?= $c['image'] ?>" class="img-fluid">
+
+              <div class="academic-card-body">
+                <h3><?= $c['title'] ?></h3>
+                <p><?= $c['short_description'] ?></p>
+
+                <a href="course-details.php?course=<?= $c['slug'] ?>" class="academic-link">
+                  Explore <?= $c['title'] ?> →
+                </a>
+              </div>
+            </div>
+          </div>
+        <?php endforeach; ?>
       </div>
     </div>
   </div>
@@ -160,7 +181,7 @@ include 'include/header.php';
             is ready to guide you through the next steps.
           </p>
 
-          <a href="admissions.html" class="btn btn-primary cta-btn">
+          <a href="admissions.php" class="btn btn-primary cta-btn">
             Begin Admission Process
           </a>
 

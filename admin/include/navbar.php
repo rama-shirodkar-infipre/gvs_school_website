@@ -51,33 +51,60 @@
         </li>
 
         <!-- Admissions -->
-        <li class="has-submenu <?= isActive([
-                                    'admission-intro.php',
-                                    'admission-intro-edit.php',
+        <!-- Admissions -->
+        <li class="<?= isActive([
+                        'admission-intro.php',
+                        'admission-intro-edit.php',
 
-                                    'admission-steps.php',
-                                    'admission-step-add.php',
-                                    'admission-step-edit.php',
+                        'admission-steps.php',
+                        'admission-step-add.php',
+                        'admission-step-edit.php',
 
-                                    'admission-levels.php',
-                                    'admission-level-add.php',
-                                    'admission-level-edit.php',
+                        'admission-levels.php',
+                        'admission-level-add.php',
+                        'admission-level-edit.php',
 
-                                    'admission-documents.php',
-                                    'admission-document-add.php',
-                                    'admission-document-edit.php',
+                        'admission-documents.php',
+                        'admission-document-add.php',
+                        'admission-document-edit.php',
 
-                                    'admission-highlights.php',
-                                    'admission-highlight-add.php',
-                                    'admission-highlight-edit.php'
-                                ]) ?>">
-            <a href="javascript:void(0);">
+                        'admission-highlights.php',
+                        'admission-highlight-add.php',
+                        'admission-highlight-edit.php'
+                    ]) ?>">
+
+            <a data-bs-toggle="collapse"
+                href="#admissionMenu"
+                role="button"
+                aria-expanded="false"
+                aria-controls="admissionMenu">
                 <i class="bi bi-mortarboard-fill"></i>
                 <span>Admissions</span>
                 <i class="bi bi-chevron-down float-end"></i>
             </a>
 
-            <ul class="submenu">
+            <ul class="collapse submenu
+        <?= isActive([
+            'admission-intro.php',
+            'admission-intro-edit.php',
+
+            'admission-steps.php',
+            'admission-step-add.php',
+            'admission-step-edit.php',
+
+            'admission-levels.php',
+            'admission-level-add.php',
+            'admission-level-edit.php',
+
+            'admission-documents.php',
+            'admission-document-add.php',
+            'admission-document-edit.php',
+
+            'admission-highlights.php',
+            'admission-highlight-add.php',
+            'admission-highlight-edit.php'
+        ]) ? 'show' : '' ?>"
+                id="admissionMenu">
 
                 <li>
                     <a href="admission-intro.php"
@@ -116,6 +143,88 @@
 
             </ul>
         </li>
+
+        <!-- Courses & Academics -->
+        <li class="<?= isActive([
+                'courses.php',
+                'course-action.php',
+
+                'course-outcomes.php',
+                'course-outcome-action.php',
+
+                'course-curriculum.php',
+                'course-curriculum-action.php',
+
+                'course-methodology.php',
+                'course-methodology-action.php'
+                ]) ?>">
+
+            <a data-bs-toggle="collapse"
+            href="#coursesMenu"
+            role="button"
+            aria-expanded="false"
+            aria-controls="coursesMenu">
+            <i class="bi bi-book-fill"></i>
+            <span>Courses</span>
+            <i class="bi bi-chevron-down float-end"></i>
+            </a>
+
+            <ul class="collapse submenu
+        <?= isActive([
+            'courses.php',
+            'course-action.php',
+
+            'course-outcomes.php',
+            'course-outcome-action.php',
+
+            'course-curriculum.php',
+            'course-curriculum-action.php',
+
+            'course-methodology.php',
+            'course-methodology-action.php'
+        ]) ? 'show' : '' ?>"
+            id="coursesMenu">
+
+            <li>
+                <a href="courses.php"
+                class="<?= isActive(['courses.php', 'course-action.php',
+
+            'course-outcomes.php',
+            'course-outcome-action.php',
+
+            'course-curriculum.php',
+            'course-curriculum-action.php',
+
+            'course-methodology.php',
+            'course-methodology-action.php']) ?>">
+                Course Master
+                </a>
+            </li>
+
+            <!-- <li>
+                <a href="course-outcomes.php"
+                class="<?= isActive(['course-outcomes.php', 'course-outcome-action.php']) ?>">
+                Learning Outcomes
+                </a>
+            </li>
+
+            <li>
+                <a href="course-curriculum.php"
+                class="<?= isActive(['course-curriculum.php', 'course-curriculum-action.php']) ?>">
+                Curriculum
+                </a>
+            </li>
+
+            <li>
+                <a href="course-methodology.php"
+                class="<?= isActive(['course-methodology.php', 'course-methodology-action.php']) ?>">
+                Teaching Methodology
+                </a>
+            </li> -->
+
+            </ul>
+        </li>
+
 
         <!-- Gallery -->
         <li>

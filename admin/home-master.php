@@ -81,7 +81,7 @@ $faqs = $pdo->query("SELECT * FROM faqs ORDER BY display_order, id DESC")->fetch
     </div>
 
     <!-- ================= FAQ ================= -->
-    <div class="card mb-4">
+    <!-- <div class="card mb-4">
         <div class="card-header d-flex justify-content-between">
             <strong>FAQs</strong>
             <a href="faq-add.php" class="btn btn-sm btn-primary">Add FAQ</a>
@@ -108,7 +108,7 @@ $faqs = $pdo->query("SELECT * FROM faqs ORDER BY display_order, id DESC")->fetch
                 <?php endforeach; ?>
             </table>
         </div>
-    </div>
+    </div> -->
 
 </div>
 

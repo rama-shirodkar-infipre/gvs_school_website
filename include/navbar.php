@@ -20,25 +20,24 @@
             <div class="ml-auto">
                 <nav class="site-navigation position-relative text-right" role="navigation">
                     <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
-                        <li class="active">
+                        <li class="<?php echo basename($_SERVER['PHP_SELF']) == 'index.php' ? 'active' : ''; ?>">
                             <a href="index.php" class="nav-link text-left">Home</a>
                         </li>
-                        <li>
+                        <li class="<?php echo basename($_SERVER['PHP_SELF']) == 'about.php' ? 'active' : ''; ?>">
                             <a href="about.php" class="nav-link text-left">About Us</a>
                         </li>
-                        <li>
+                        <li class="<?php echo basename($_SERVER['PHP_SELF']) == 'admissions.php' ? 'active' : ''; ?>">
                             <a href="admissions.php" class="nav-link text-left">Admissions</a>
                         </li>
-                        <li>
+                        <li class="<?php echo basename($_SERVER['PHP_SELF']) == 'courses.php' ? 'active' : ''; ?>">
                             <a href="courses.php" class="nav-link text-left">Courses</a>
                         </li>
-                        <li>
+                        <li class="<?php echo basename($_SERVER['PHP_SELF']) == 'gallery.php' ? 'active' : ''; ?>">
                             <a href="gallery.php" class="nav-link text-left">Gallery</a>
                         </li>
-                        <li>
+                        <li class="<?php echo basename($_SERVER['PHP_SELF']) == 'contact.php' ? 'active' : ''; ?>">
                             <a href="contact.php" class="nav-link text-left">Contact</a>
                         </li>
-                    </ul>
                     </ul>
                 </nav>
 

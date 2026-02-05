@@ -18,10 +18,10 @@
             <div class="col-lg-3 mb-4">
                 <h3 class="footer-heading"><span>Explore Our Site</span></h3>
                 <ul class="list-unstyled footer-links">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="index.php">Home</a></li>
+                    <li><a href="about.php">About Us</a></li>
                     <li><a href="admission.html">Admission</a></li>
-                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="contact.php">Contact</a></li>
                 </ul>
             </div>
 
@@ -31,7 +31,7 @@
                     <li><a href="#">Programs</a></li>
                     <li><a href="#">Our Approach</a></li>
                     <li><a href="#">Activities</a></li>
-                    <li><a href="gallery.html">Gallery</a></li>
+                    <li><a href="gallery.php">Gallery</a></li>
                 </ul>
             </div>
 

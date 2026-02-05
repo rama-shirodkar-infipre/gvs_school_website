@@ -248,29 +248,6 @@ $staff = $pdo->query("
         </div>
       </div>
     </div>
-
-
-    <div class="site-section">
-      <div class="container">
-        <div class="row">
-          <?php foreach ($staff as $s): ?>
-            <div class="col-lg-4 col-md-6 mb-5">
-              <div class="feature-1 border person text-center">
-                <?php if ($s['image']): ?>
-                  <img src="uploads/<?= $s['image'] ?>" class="img-fluid">
-                <?php endif; ?>
-                <div class="feature-1-content">
-                  <h2><?= htmlspecialchars($s['name']) ?></h2>
-                  <span class="position d-block"><?= htmlspecialchars($s['designation']) ?></span>
-                  <p><?= htmlspecialchars($s['bio']) ?></p>
-                </div>
-              </div>
-            </div>
-          <?php endforeach; ?>
-        </div>
-
-      </div>
-    </div>
   <?php endif; ?>
 
 </div>

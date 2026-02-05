@@ -1,56 +1,72 @@
 <?php
 include 'include/config.php';
+include 'admin/helpers.php';
 include 'include/header.php';
+
+$success = false;
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+  $stmt = $pdo->prepare("
+        INSERT INTO contact_enquiries 
+        (name, email, service, message, is_read, created_at)
+        VALUES (?,?,?,?,0,NOW())
+    ");
+
+  $stmt->execute([
+    $_POST['name'],
+    $_POST['email'],
+    $_POST['service'],
+    $_POST['message']
+  ]);
+
+  $success = true;
+}
 ?>
 
 <div class="site-wrap">
-  <?php
-  include 'include/navbar.php';
-  ?>
+  <?php include 'include/navbar.php'; ?>
 
-  <div class="site-section ftco-subscribe-1 site-blocks-cover pb-4" style="background-image:
+  <div class="site-section ftco-subscribe-1 site-blocks-cover pb-4"
+    style="background-image:
      linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
      url('images/bg_1.jpg')">
     <div class="container">
       <div class="row align-items-end">
         <div class="col-lg-7">
           <h2 class="mb-0">Contact</h2>
-          <p>Have questions about our programs?.</p>
+          <p>Have questions about our programs?</p>
         </div>
       </div>
     </div>
   </div>
 
-
   <div class="custom-breadcrumns border-bottom">
     <div class="container">
-      <a href="index.html">Home</a>
+      <a href="index.php">Home</a>
       <span class="mx-3 icon-keyboard_arrow_right"></span>
       <span class="current">Contact</span>
     </div>
   </div>
 
-
   <div class="site-section">
     <div class="container">
       <div class="row">
 
-        <!-- LEFT COLUMN : CONTACT INFO -->
+        <!-- LEFT : CONTACT INFO -->
         <div class="col-lg-4 mb-5">
 
           <h4 class="mb-3">General</h4>
           <p>
-            For any general inquiries about our school, feel free to contact our main office:
-            <br>
-            <a href="mailto:info@gopalkrishnaschool.com">info@gopalkrishnaschool.com</a>
+            <a href="mailto:info@gopalkrishnaschool.com">
+              info@gopalkrishnaschool.com
+            </a>
           </p>
 
           <hr>
 
-          <h4 class="mb-3">Parents</h4>
+          <h4 class="mb-3">Admissions</h4>
           <p>
-            For admissions or parent-related queries, contact:
-            <br>
             <a href="mailto:admissions@gopalkrishnaschool.com">
               admissions@gopalkrishnaschool.com
             </a>
@@ -58,10 +74,8 @@ include 'include/header.php';
 
           <hr>
 
-          <h4 class="mb-3">Vendor</h4>
+          <h4 class="mb-3">Vendors</h4>
           <p>
-            For partnership or vendor proposals:
-            <br>
             <a href="mailto:collab@gopalkrishnaschool.com">
               collab@gopalkrishnaschool.com
             </a>
@@ -69,51 +83,63 @@ include 'include/header.php';
 
         </div>
 
-        <!-- RIGHT COLUMN : FORM -->
+        <!-- RIGHT : FORM -->
         <div class="col-lg-8">
 
           <h2 class="mb-4">Have questions about our programs?</h2>
-          <p class="mb-5">
-            Fill out the form below, and our admissions team will get back to you promptly.
-          </p>
+          <p class="mb-4">Fill out the form below and we’ll get back to you.</p>
 
-          <form action="#" method="post">
+          <?php if ($success): ?>
+            <div class="alert alert-success">
+              Thank you! Your enquiry has been submitted successfully.
+            </div>
+          <?php endif; ?>
 
-            <div class="form-group">
+          <form method="post">
+
+            <div class="form-group mb-3">
               <label>Parent's Name *</label>
-              <input type="text" class="form-control form-control-lg" required>
+              <input type="text" name="name"
+                class="form-control form-control-lg" required>
             </div>
 
-            <div class="form-group">
+            <div class="form-group mb-3">
               <label>Email *</label>
-              <input type="email" class="form-control form-control-lg" required>
+              <input type="email" name="email"
+                class="form-control form-control-lg" required>
             </div>
 
-            <div class="form-group">
-              <label>I have a question about</label>
+            <div class="form-group mb-3">
+              <label>I have a question about *</label>
               <div>
-                <label class="mr-3">
-                  <input type="radio" name="program"> Pre-Primary
+                <label class="me-3">
+                  <input type="radio" name="service"
+                    value="Pre-Primary" required> Pre-Primary
                 </label>
-                <label class="mr-3">
-                  <input type="radio" name="program"> Primary
+
+                <label class="me-3">
+                  <input type="radio" name="service"
+                    value="Primary"> Primary
                 </label>
+
                 <label>
-                  <input type="radio" name="program"> High School
+                  <input type="radio" name="service"
+                    value="High School"> High School
                 </label>
               </div>
             </div>
 
-            <div class="form-group">
-              <label>Questions or message *</label>
-              <textarea class="form-control" rows="6" required></textarea>
+            <div class="form-group mb-4">
+              <label>Questions / Message *</label>
+              <textarea name="message"
+                class="form-control"
+                rows="6" required></textarea>
             </div>
 
-            <div class="form-group">
-              <button type="submit" class="btn btn-primary btn-lg px-5">
-                Submit Inquiry
-              </button>
-            </div>
+            <button type="submit"
+              class="btn btn-primary btn-lg px-5">
+              Submit Inquiry
+            </button>
 
           </form>
 
@@ -122,12 +148,6 @@ include 'include/header.php';
     </div>
   </div>
 
-  <?php
-  include 'include/footer.php';
-  ?>
-
-
+  <?php include 'include/footer.php'; ?>
 </div>
-<?php
-include 'include/footerScript.php';
-?>
+<?php include 'include/footerScript.php'; ?>

@@ -1,6 +1,36 @@
 <?php
 include 'include/config.php';
+include 'admin/helpers.php';
 include 'include/header.php';
+
+// Why Choose Us
+$whyChoose = $pdo->query("
+    SELECT * FROM why_choose_us
+    WHERE is_active=1
+    ORDER BY id ASC
+")->fetchAll();
+
+
+// Steps
+$steps = $pdo->query("
+    SELECT * FROM admission_steps
+    WHERE is_active = 1
+    ORDER BY step_no ASC
+")->fetchAll();
+
+// Fetch active sliders
+$sliders = $pdo->query("
+      SELECT * FROM home_sliders
+      WHERE is_active = 1
+      ORDER BY display_order ASC
+  ")->fetchAll();
+
+// about us
+$about = $pdo->query("SELECT * FROM about_us WHERE is_active=1 LIMIT 1")->fetch();
+
+// course list
+$courses = $pdo->query("SELECT * FROM courses WHERE is_active=1")->fetchAll();
+
 ?>
 
 <div class="site-wrap">
@@ -9,25 +39,33 @@ include 'include/header.php';
   ?>
 
 
-  <div class="hero-slide owl-carousel site-blocks-cover">
-    <div class="intro-section" style="background-image: url('images/hero_1.jpg');">
-      <div class="container">
-        <div class="row align-items-center">
-          <div class="col-lg-12 mx-auto text-center" data-aos="fade-up">
+  <?php if (!empty($sliders)): ?>
+    <div class="hero-slide owl-carousel site-blocks-cover">
+      <?php foreach ($sliders as $slider): ?>
+        <div class="intro-section" style="background-image: url('<?= $site_url . 'uploads/' . htmlspecialchars($slider['image']) ?>');">
+          <div class="container">
+            <div class="row align-items-center">
+              <div class="col-lg-12 mx-auto text-center" data-aos="fade-up">
+                <h1 class="mb-4"><?= htmlspecialchars($slider['title']) ?></h1>
+                <p class="lead"><?= htmlspecialchars($slider['subtitle']) ?></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      <?php endforeach; ?>
+    </div>
+  <?php else: ?>
+    <div class="hero-slide owl-carousel site-blocks-cover">
+      <div class="intro-section" style="background-image: url('images/hero_1.jpg');">
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-lg-12 mx-auto text-center" data-aos="fade-up">
+            </div>
           </div>
         </div>
       </div>
     </div>
-
-    <div class="intro-section" style="background-image: url('images/hero_1.jpg');">
-      <div class="container">
-        <div class="row align-items-center">
-          <div class="col-lg-12 mx-auto text-center" data-aos="fade-up">
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <?php endif; ?>
 
   <div class="site-section">
     <div class="container">
@@ -35,7 +73,7 @@ include 'include/header.php';
 
         <!-- Image -->
         <div class="col-lg-6 mb-4 mb-lg-0">
-          <img src="images/about-school.jpg" alt="Gopal Krishna School Students" class="img-fluid rounded-lg shadow">
+          <img src="uploads/<?= $about['image'] ?>" alt="Gopal Krishna School Students" class="img-fluid rounded-lg shadow">
         </div>
 
         <!-- Content -->
@@ -43,20 +81,12 @@ include 'include/header.php';
           <span class="text-uppercase text-muted small">About Us</span>
 
           <h2 class="mt-2 mb-4" style="color:#000;">
-            Discover Gopal Krishna School
+            <?= nl2br($about['title']) ?>
           </h2>
 
-          <p>
-            We believe in a student-centered approach to education that blends rigorous academic inquiry with a focus
-            on creativity, critical thinking, and social-emotional well-being.
-          </p>
+          <?= $about['description'] ?>
 
-          <p>
-            Our dedicated educators are passionate about cultivating a lifelong love of learning and helping each
-            student reach their full potential.
-          </p>
-
-          <a href="about.html" class="btn btn-outline-primary px-4 py-2 rounded-pill mt-3">
+          <a href="about.php" class="btn btn-outline-primary px-4 py-2 rounded-pill mt-3">
             Know more about us
           </a>
         </div>
@@ -66,59 +96,35 @@ include 'include/header.php';
   </div>
 
 
-  <div class="site-section">
-    <div class="container">
-      <div class="row mb-5 justify-content-center text-center">
-        <div class="col-lg-4 mb-5">
-          <h2 class="section-title-underline mb-5">
-            <span>Why Choose Gopal Krishna School?</span>
-          </h2>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
-
-          <div class="feature-1 border">
-            <div class="icon-wrapper bg-primary">
-              <span class="flaticon-mortarboard text-white"></span>
-            </div>
-            <div class="feature-1-content">
-              <h2>Character Development</h2>
-              <p>We instill strong values like integrity, respect, and empathy, preparing students to be responsible
-                and compassionate citizens.</p>
-              <p><a href="#" class="btn btn-primary px-4 rounded-0">Learn More</a></p>
-            </div>
+  <!-- ================= WHY CHOOSE US ================= -->
+  <?php if (!empty($whyChoose)): ?>
+    <div class="site-section bg-light">
+      <div class="container">
+        <div class="row mb-5 justify-content-center text-center">
+          <div class="col-lg-4 mb-5">
+            <h2 class="section-title-underline mb-5">
+              <span>Why Choose Gopal Krishna School?</span>
+            </h2>
           </div>
         </div>
-        <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
-          <div class="feature-1 border">
-            <div class="icon-wrapper bg-primary">
-              <span class="flaticon-school-material text-white"></span>
+        <div class="row">
+          <?php foreach ($whyChoose as $w): ?>
+            <div class="col-lg-4 col-md-6 mb-4">
+              <div class="feature-1 border">
+                <div class="icon-wrapper bg-primary">
+                  <span class="<?= $w['icon'] ?> text-white"></span>
+                </div>
+                <div class="feature-1-content">
+                  <h2><?= htmlspecialchars($w['title']) ?></h2>
+                  <?= $w['description'] ?>
+                </div>
+              </div>
             </div>
-            <div class="feature-1-content">
-              <h2>Academic Excellence</h2>
-              <p>Our rigorous curriculum and dedicated faculty empower students to achieve their full academic
-                potential and succeed in their chosen paths</p>
-              <p><a href="#" class="btn btn-primary px-4 rounded-0">Learn More</a></p>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
-          <div class="feature-1 border">
-            <div class="icon-wrapper bg-primary">
-              <span class="flaticon-library text-white"></span>
-            </div>
-            <div class="feature-1-content">
-              <h2>Holistic Well-being</h2>
-              <p>Our supportive environment fosters emotional intelligence and resilience for a balanced and joyful
-                school experience.</p>
-              <p><a href="#" class="btn btn-primary px-4 rounded-0">Learn More</a></p>
-            </div>
-          </div>
+          <?php endforeach; ?>
         </div>
       </div>
     </div>
-  </div>
+  <?php endif; ?>
 
   <div class="site-section bg-light">
     <div class="container">
@@ -136,70 +142,26 @@ include 'include/header.php';
       </div>
 
       <div class="row">
-
-        <!-- Pre-Primary -->
-        <div class="col-lg-4 col-md-6 mb-4">
-          <div class="feature-1 border h-100">
-            <figure class="mb-3">
-              <img src="images/pre-primary.jpg" alt="Pre-Primary School" class="img-fluid rounded">
-            </figure>
-            <div class="feature-1-content">
-              <h3>Pre-Primary School</h3>
-              <p>
-                Our Pre-Primary program focuses on foundational skills through play-based learning. We ignite
-                curiosity and creativity, ensuring a joyful transition into formal education.
-              </p>
-              <p>
-                <a href="curriculum.html#pre-primary" class="btn btn-primary px-4 rounded-0">
-                  Pre-Primary Curriculum
-                </a>
-              </p>
+        <?php foreach ($courses as $c): ?>
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="feature-1 border h-100">
+              <figure class="mb-3">
+                <img src="<?= $site_url ?>uploads/<?= $c['image'] ?>" alt="Pre-Primary School" class="img-fluid rounded">
+              </figure>
+              <div class="feature-1-content">
+                <h3><?= $c['title'] ?></h3>
+                <p>
+                  <?= $c['short_description'] ?>
+                </p>
+                <p>
+                  <a href="course-details.php?course=<?= $c['slug'] ?>" class="btn btn-primary px-4 rounded-0">
+                    <?= $c['title'] ?> Curriculum
+                  </a>
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-
-        <!-- Primary -->
-        <div class="col-lg-4 col-md-6 mb-4">
-          <div class="feature-1 border h-100">
-            <figure class="mb-3">
-              <img src="images/primary.jpg" alt="Primary School" class="img-fluid rounded">
-            </figure>
-            <div class="feature-1-content">
-              <h3>Primary School</h3>
-              <p>
-                Our Primary curriculum builds a strong academic foundation in core subjects, combined with
-                extracurricular activities to encourage holistic growth and confidence.
-              </p>
-              <p>
-                <a href="curriculum.html#primary" class="btn btn-primary px-4 rounded-0">
-                  Primary Curriculum
-                </a>
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <!-- High School -->
-        <div class="col-lg-4 col-md-6 mb-4">
-          <div class="feature-1 border h-100">
-            <figure class="mb-3">
-              <img src="images/high-school.jpg" alt="High School" class="img-fluid rounded">
-            </figure>
-            <div class="feature-1-content">
-              <h3>High School</h3>
-              <p>
-                Our High School program emphasizes academic rigor, critical thinking, and career readiness, preparing
-                students to excel in board examinations and beyond.
-              </p>
-              <p>
-                <a href="curriculum.html#high-school" class="btn btn-primary px-4 rounded-0">
-                  High School Curriculum
-                </a>
-              </p>
-            </div>
-          </div>
-        </div>
-
+        <?php endforeach; ?>
       </div>
     </div>
   </div>
@@ -260,101 +222,33 @@ include 'include/header.php';
           </h2>
         </div>
       </div>
+      <?php
+      // Fetch testimonials from database
+      $testimonials = $pdo->query("
+        SELECT * FROM testimonials
+        WHERE is_active = 1
+        ORDER BY display_order ASC
+      ")->fetchAll();
+      ?>
 
-
-      <div class="owl-slide owl-carousel">
-
-        <div class="ftco-testimonial-1">
-          <div class="ftco-testimonial-vcard d-flex align-items-center mb-4">
-            <img src="images/person_1.jpg" alt="Image" class="img-fluid mr-3">
-            <div>
-              <h3>Allison Holmes</h3>
-              <span>Designer</span>
+      <?php if (!empty($testimonials)): ?>
+        <div class="owl-slide owl-carousel">
+          <?php foreach ($testimonials as $testimonial): ?>
+            <div class="ftco-testimonial-1">
+              <div class="ftco-testimonial-vcard d-flex align-items-center mb-4">
+                <img src="<?= $site_url ?>uploads/<?= htmlspecialchars($testimonial['photo']) ?>" alt="<?= htmlspecialchars($testimonial['name']) ?>" class="img-fluid mr-3">
+                <div>
+                  <h3><?= htmlspecialchars($testimonial['name']) ?></h3>
+                  <span><?= htmlspecialchars($testimonial['designation']) ?></span>
+                </div>
+              </div>
+              <div>
+                <p>&ldquo;<?= htmlspecialchars($testimonial['message']) ?>&rdquo;</p>
+              </div>
             </div>
-          </div>
-          <div>
-            <p>&ldquo;Lorem ipsum dolor sit, amet consectetur adipisicing elit. Neque, mollitia. Possimus mollitia
-              nobis libero quidem aut tempore dolore iure maiores, perferendis, provident numquam illum nisi amet
-              necessitatibus. A, provident aperiam!&rdquo;</p>
-          </div>
+          <?php endforeach; ?>
         </div>
-
-        <div class="ftco-testimonial-1">
-          <div class="ftco-testimonial-vcard d-flex align-items-center mb-4">
-            <img src="images/person_2.jpg" alt="Image" class="img-fluid mr-3">
-            <div>
-              <h3>Allison Holmes</h3>
-              <span>Designer</span>
-            </div>
-          </div>
-          <div>
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Neque, mollitia. Possimus mollitia nobis
-              libero quidem aut tempore dolore iure maiores, perferendis, provident numquam illum nisi amet
-              necessitatibus. A, provident aperiam!</p>
-          </div>
-        </div>
-
-        <div class="ftco-testimonial-1">
-          <div class="ftco-testimonial-vcard d-flex align-items-center mb-4">
-            <img src="images/person_4.jpg" alt="Image" class="img-fluid mr-3">
-            <div>
-              <h3>Allison Holmes</h3>
-              <span>Designer</span>
-            </div>
-          </div>
-          <div>
-            <p>&ldquo;Lorem ipsum dolor sit, amet consectetur adipisicing elit. Neque, mollitia. Possimus mollitia
-              nobis libero quidem aut tempore dolore iure maiores, perferendis, provident numquam illum nisi amet
-              necessitatibus. A, provident aperiam!&rdquo;</p>
-          </div>
-        </div>
-
-        <div class="ftco-testimonial-1">
-          <div class="ftco-testimonial-vcard d-flex align-items-center mb-4">
-            <img src="images/person_3.jpg" alt="Image" class="img-fluid mr-3">
-            <div>
-              <h3>Allison Holmes</h3>
-              <span>Designer</span>
-            </div>
-          </div>
-          <div>
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Neque, mollitia. Possimus mollitia nobis
-              libero quidem aut tempore dolore iure maiores, perferendis, provident numquam illum nisi amet
-              necessitatibus. A, provident aperiam!</p>
-          </div>
-        </div>
-
-        <div class="ftco-testimonial-1">
-          <div class="ftco-testimonial-vcard d-flex align-items-center mb-4">
-            <img src="images/person_2.jpg" alt="Image" class="img-fluid mr-3">
-            <div>
-              <h3>Allison Holmes</h3>
-              <span>Designer</span>
-            </div>
-          </div>
-          <div>
-            <p>&ldquo;Lorem ipsum dolor sit, amet consectetur adipisicing elit. Neque, mollitia. Possimus mollitia
-              nobis libero quidem aut tempore dolore iure maiores, perferendis, provident numquam illum nisi amet
-              necessitatibus. A, provident aperiam!&rdquo;</p>
-          </div>
-        </div>
-
-        <div class="ftco-testimonial-1">
-          <div class="ftco-testimonial-vcard d-flex align-items-center mb-4">
-            <img src="images/person_4.jpg" alt="Image" class="img-fluid mr-3">
-            <div>
-              <h3>Allison Holmes</h3>
-              <span>Designer</span>
-            </div>
-          </div>
-          <div>
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Neque, mollitia. Possimus mollitia nobis
-              libero quidem aut tempore dolore iure maiores, perferendis, provident numquam illum nisi amet
-              necessitatibus. A, provident aperiam!</p>
-          </div>
-        </div>
-
-      </div>
+      <?php endif; ?>
 
     </div>
   </div>
@@ -373,77 +267,54 @@ include 'include/header.php';
     </p> -->
         </div>
       </div>
+      <?php if ($steps): ?>
+        <div class="row">
+          <?php foreach ($steps as $s): ?>
+            <div class="col-lg-3 col-md-6 mb-5 mb-lg-0">
+              <div class="why-card">
+                <span class="step-label">Step: <?= sprintf('%02d', $s['step_no']) ?></span>
+                <h3><?= htmlspecialchars($s['title']) ?></h3>
+                <p>
+                  <?= nl2br($s['description']) ?>
+                </p>
+              </div>
 
-      <div class="row">
-        <div class="col-lg-4 col-md-6 mb-5 mb-lg-0">
-          <div class="why-card">
-            <span class="step-label">Step: 01</span>
-            <h3>Inquiry & Application</h3>
-            <p>
-              Begin your journey by filling out our inquiry or application form. Our admissions team will guide you
-              through the next steps.
-            </p>
-          </div>
-        </div>
-        <div class="col-lg-4 col-md-6 mb-5 mb-lg-0">
-          <div class="why-card">
-            <span class="step-label">Step: 02</span>
-            <h3>Campus Visit & Interaction</h3>
-            <p>
-              We welcome you to visit our campus in Belagavi to experience our community firsthand. This step also
-              includes a friendly interaction session to understand your child's needs
-            </p>
-          </div>
-        </div>
-        <div class="col-lg-4 col-md-6 mb-5 mb-lg-0">
-          <div class="why-card">
-            <span class="step-label">Step: 03</span>
-            <h3>Confirmation & Enrollment</h3>
-            <p>
-              Upon successful completion of the process, our admissions team will confirm your child's enrollment. We
-              will guide you through the final paperwork and welcome you to the Gopal Krishna School family.
-            </p>
-          </div>
-        </div>
-        <!-- <div class="col-lg-4 col-md-6 mb-5 mb-lg-0">
-            <span class="icon flaticon-library"></span>
-            <h3>Key of Success</h3>
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Reiciendis recusandae, iure repellat quis delectus ea?
-              Dolore, amet reprehenderit.</p>
-          </div> -->
-      </div>
-      <div class="text-center mt-5">
-        <p class="mb-4">
-          We look forward to welcoming your family into our community.
-        </p>
-        <a href="admissions.html" class="btn btn-primary px-5 py-3 rounded-pill">
-          Apply Now
-        </a>
-      </div>
+            </div>
+          <?php endforeach; ?>
 
+        </div>
+        <div class="text-center mt-5">
+          <p class="mb-4">
+            We look forward to welcoming your family into our community.
+          </p>
+          <a href="admissions.php" class="btn btn-primary px-5 py-3 rounded-pill">
+            Apply Now
+          </a>
+        </div>
+        <br>
+      <?php endif; ?>
     </div>
-  </div>
-  
-  <div class="site-section ftco-subscribe-1" style="background-image: url('images/bg_1.jpg')">
-    <div class="container">
-      <div class="row align-items-center">
-        <div class="col-lg-7">
-          <h2>Subscribe to us!</h2>
-          <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,</p>
-        </div>
-        <div class="col-lg-5">
-          <form action="" class="d-flex">
-            <input type="text" class="rounded form-control mr-2 py-3" placeholder="Enter your email">
-            <button class="btn btn-primary rounded py-3 px-4" type="submit">Send</button>
-          </form>
+
+    <div class="site-section ftco-subscribe-1" style="background-image: url('images/bg_1.jpg')">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-7">
+            <h2>Subscribe to us!</h2>
+            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,</p>
+          </div>
+          <div class="col-lg-5">
+            <form action="" class="d-flex">
+              <input type="text" class="rounded form-control mr-2 py-3" placeholder="Enter your email">
+              <button class="btn btn-primary rounded py-3 px-4" type="submit">Send</button>
+            </form>
+          </div>
         </div>
       </div>
     </div>
+    <?php
+    include 'include/footer.php';
+    ?>
   </div>
   <?php
-  include 'include/footer.php';
+  include 'include/footerScript.php';
   ?>
-</div>
-<?php
-include 'include/footerScript.php';
-?>
